@@ -2,6 +2,10 @@ import { Button } from '@/components/ui/button';
 import { Logo } from './logo';
 import { NavMenu } from './nav-menu';
 import { NavigationSheet } from './navigation-sheet';
+import Link from 'next/link';
+import { PenBox } from 'lucide-react';
+import { SignInButton, SignedIn, SignedOut } from '@clerk/nextjs';
+import UserMenu from '../user-menu';
 
 const Navbar01Page = () => {
 	return (
@@ -14,10 +18,22 @@ const Navbar01Page = () => {
 					<NavMenu className="hidden md:block" />
 
 					<div className="flex items-center gap-3">
-						<Button variant="outline" className="hidden sm:inline-flex">
-							Sign In
-						</Button>
-						<Button>Get Started</Button>
+						<Link href="/note/write">
+							<Button variant="green" className="flex items-center gap-2">
+								<PenBox size={18} />
+								<span className="hidden md:inline">Write New</span>
+							</Button>
+						</Link>
+
+						<SignedOut>
+							<SignInButton>
+								<Button>Sign In</Button>
+							</SignInButton>
+						</SignedOut>
+
+						<SignedIn>
+							<UserMenu />
+						</SignedIn>
 
 						{/* Mobile Menu */}
 						<div className="md:hidden">
