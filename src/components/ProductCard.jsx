@@ -10,7 +10,7 @@ function NumberWithCommas({ value }) {
 //TODO change date to time ago
 const ProductCard = ({ imageUrl, rating, reviews, seller, title, price, originalPrice, date }) => {
 	return (
-		<div className="w-[220px] p-2 border rounded-xl hover:shadow-md relative">
+		<div className="w-[220px] p-2 border rounded-xl hover:shadow-md relative mx-5 my-2 bg-white">
 			<img src={imageUrl} alt={title} className="h-40 rounded-xl w-full object-cover" />
 
 			{/* <Heart className="absolute top-2 right-2 w-5 h-5 text-gray-400 cursor-pointer" /> */}
