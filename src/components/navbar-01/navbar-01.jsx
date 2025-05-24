@@ -21,7 +21,7 @@ const Navbar01Page = () => {
 						<Link href="/note/write">
 							<Button variant="green" className="flex items-center gap-2">
 								<PenBox size={18} />
-								<span className="hidden md:inline">Write New</span>
+								<span className="hidden md:inline">Add</span>
 							</Button>
 						</Link>
 

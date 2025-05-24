@@ -1,6 +1,7 @@
 import React from 'react';
 import ProductCard from '@/components/ProductCard';
 import { ArrowUpWideNarrow } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const ListingsHome = () => {
 	return (
@@ -8,6 +9,19 @@ const ListingsHome = () => {
 			<div className="flex justify-between mx-5 my-5 items-center">
 				<h1 className="text-2xl font-bold ">View All Listings</h1>
 				<ArrowUpWideNarrow />
+			</div>
+
+			<div className="mx-5 my-2 space-x-2">
+				<Button className="bg-foregroundCustom">Filter</Button>
+				<Button className="bg-white text-black hover:bg-foregroundCustom hover:text-white">
+					Fixed Sales
+				</Button>
+				<Button className="bg-white text-black hover:bg-foregroundCustom hover:text-white">
+					Biddings
+				</Button>
+				<Button className="bg-white text-black hover:bg-foregroundCustom hover:text-white">
+					Services
+				</Button>
 			</div>
 
 			<div className="flex flex-wrap justify-center">
@@ -19,7 +33,9 @@ const ListingsHome = () => {
 					title="5 year old Playstation 5"
 					price={19500}
 					originalPrice={23000}
-					date="20 min ago"
+					date={new Date('2025-05-24T09:30:00')}
+					institute="Islamic University of Technology"
+					location="Boardbazar, Dhaka"
 				/>
 
 				<ProductCard
@@ -30,7 +46,9 @@ const ListingsHome = () => {
 					title="Used Kindle Paperwhite 10th Gen"
 					price={8500}
 					originalPrice={12000}
-					date="1 hour ago"
+					date={new Date('2025-05-21T09:30:00')}
+					institute="Dhaka University"
+					location="Dhaka University, Dhaka"
 				/>
 
 				<ProductCard
@@ -41,7 +59,9 @@ const ListingsHome = () => {
 					title="iPhone 11 (Black, 64 GB)"
 					price={36000}
 					originalPrice={42000}
-					date="3 hours ago"
+					date={new Date('2025-05-22T09:30:00')}
+					institute="BRAC University"
+					location="Rampura, Dhaka"
 				/>
 
 				<ProductCard
@@ -52,7 +72,9 @@ const ListingsHome = () => {
 					title="Dell Inspiron 15, i5 10th Gen"
 					price={29500}
 					originalPrice={35000}
-					date="Yesterday"
+					date={new Date('2025-05-24T01:30:00')}
+					institute="North South University"
+					location="Bashundhara, Dhaka"
 				/>
 
 				<ProductCard
@@ -63,7 +85,9 @@ const ListingsHome = () => {
 					title="Canon DSLR Camera EOS 200D II"
 					price={42500}
 					originalPrice={52000}
-					date="2 days ago"
+					date={new Date('2025-05-24T12:30:00')}
+					institute="Jahangirnagar University"
+					location="Savar, Dhaka"
 				/>
 
 				<ProductCard
@@ -74,7 +98,9 @@ const ListingsHome = () => {
 					title="First Year CSE Book Bundle"
 					price={1800}
 					originalPrice={2500}
-					date="30 min ago"
+					date={new Date('2025-04-24T09:30:00')}
+					institute="South East University"
+					location="Mohakhali, Dhaka"
 				/>
 			</div>
 		</>
