@@ -55,7 +55,7 @@ export async function GET() {
 		const listings = await prisma.listing.findMany({
 			orderBy: { createdAt: 'desc' },
 			include: {
-				user: true, // if you want to display seller info
+				seller: true, // if you want to display seller info
 			},
 		});
 		return Response.json(listings);

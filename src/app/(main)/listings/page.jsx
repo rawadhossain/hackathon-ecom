@@ -51,7 +51,7 @@ const ListingsHome = () => {
 						imageUrl={listing.imageUrls[0] || '/fallback-image.jpg'}
 						rating={4.5} // Placeholder
 						reviews={50} // Placeholder
-						seller={listing.user?.name || 'Unknown Seller'}
+						seller={listing.seller?.name || 'Unknown Seller'}
 						title={listing.title}
 						price={listing.price}
 						originalPrice={listing.price * 1.1}
