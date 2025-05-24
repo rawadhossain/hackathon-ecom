@@ -1,6 +1,6 @@
 import { GraduationCap, MapPin, Sparkles } from 'lucide-react';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 
 function NumberWithCommas({ value }) {
 	const formattedValue = value.toLocaleString();
@@ -54,12 +54,42 @@ const ProductCard = ({
 	location,
 	id,
 }) => {
+	const [reply, setReply] = useState('');
+	const [priceGreen, setPriceGreen] = useState(false);
+	let message = `What is the best price for ${title} in BDT? Please provide the exact price only and nothing else.`;
+	const PriceAdvHandler = async () => {
+		if (!message.trim()) return;
+		// setLoading(true);
+		try {
+			const res = await fetch('/api/chatbot3', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ message: message }),
+			});
+			const data = await res.json();
+			setReply(data.reply || 'No data.');
+
+			console.log('Price: ', price, 'Reply: ', data.reply);
+			console.log('After parsing: ', parseInt(data.reply));
+			if (price < parseInt(data.reply)) {
+				setPriceGreen(true);
+				console.log('Profit!');
+			} else {
+				console.log('No profit :(');
+			}
+		} catch (err) {
+			setReply('Error: ' + err.message);
+		}
+		// setMessage('');
+
+		// setLoading(false);
+	};
+
 	return (
-		<Link
-			href={`/product/${id}`}
-			className="w-[220px] hover:scale-105 transition-all duration-300 p-2 border rounded-xl hover:shadow-md relative mx-5 my-2 bg-white"
-		>
-			<img src={imageUrl} alt={title} className="h-40 rounded-xl w-full object-cover" />
+		<div className="w-[240px] pb-5 cursor-pointer hover:scale-105 transition-all duration-300 p-2 border rounded-xl hover:shadow-md relative mx-5 my-2 bg-white">
+			<Link href={`/product/${id}`}>
+				<img src={imageUrl} alt={title} className="h-40 rounded-xl w-full object-cover" />
+			</Link>
 
 			{/* <Heart className="absolute top-2 right-2 w-5 h-5 text-gray-400 cursor-pointer" /> */}
 
@@ -68,13 +98,24 @@ const ProductCard = ({
 				<p className="text-md font-semibold truncate">{title}</p>
 
 				<div className="mt-1 text-sm">
-					<div className="flex items-center align-center space-x-1">
+					<div
+						className={`flex items-center align-center space-x-1 ${
+							priceGreen ? 'text-green-500' : 'text-gray-600'
+						}`}
+					>
 						<span className="font-bold text-3xl">৳</span>
 						<p className="font-medium text-3xl">
 							<NumberWithCommas value={price} />
 						</p>
 					</div>
 				</div>
+
+				{reply && (
+					<p className={`mt-3 max-h-96 overflow-y-auto whitespace-pre-wrap break-words `}>
+						<span className="font-bold text-xl">৳</span>
+						<NumberWithCommas value={parseInt(reply)} />
+					</p>
+				)}
 
 				{/* User Details  */}
 				<div className="flex items-center space-x-1 mt-2">
@@ -96,10 +137,13 @@ const ProductCard = ({
 				{/* Time Details  */}
 				<div className="flex items-center justify-between space-x-1">
 					<p className="font-light text-sm">{formatDateAgo(new Date(date))}</p>
-					<Sparkles className="cursor-pointer hover:text-[#2B8A3E]" />
+					<Sparkles
+						className="cursor-pointer hover:text-[#2B8A3E]"
+						onClick={PriceAdvHandler}
+					/>
 				</div>
 			</div>
-		</Link>
+		</div>
 	);
 };
 
