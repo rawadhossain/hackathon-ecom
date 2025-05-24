@@ -52,7 +52,7 @@ model Listing {
 
   sellerId         String
   seller           User         @relation("UserListings", fields: [sellerId], references: [id])
-
+  category         String
   messages         Message[]
   reviews          Review[]
   meetupLocation   String?      // JSON string or "lat,lng"
