@@ -76,7 +76,13 @@ const ProductCard = ({
 					</div>
 				</div>
 
-				{/* User Details  */}
+				{reply && (
+					<p className={`mt-3 max-h-96 overflow-y-auto whitespace-pre-wrap break-words `}>
+						<span className="font-bold text-xl">৳</span>
+						<NumberWithCommas value={parseInt(reply)} />
+					</p>
+				)}
+
 				<div className="flex items-center space-x-1 mt-2">
 					<p className="text-sm text-gray-500 font-semibold">{seller}</p>
 					{/* TODO Add image and verified badge */}
