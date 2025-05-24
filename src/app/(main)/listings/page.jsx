@@ -12,6 +12,8 @@ const ListingsHome = () => {
 	const [filter, setFilter] = useState('all');
 	const [onlyMyUniversity, setOnlyMyUniversity] = useState(false);
 	const [currentUserUniversity, setCurrentUserUniversity] = useState(false);
+	const [isAdmin, setIsAdmin] = useState(false);
+	const [adminMode, setAdminMode] = useState(false);
 
 	const getCurrentUserUniversity = () => {
 		fetch('/api/user')
@@ -21,6 +23,7 @@ const ListingsHome = () => {
 			})
 			.then((data) => {
 				setCurrentUserUniversity(data.university);
+				setIsAdmin(data.isAdmin);
 				console.log("Current user's university:", data.university);
 			})
 			.catch((error) => {
@@ -61,6 +64,19 @@ const ListingsHome = () => {
 	console.log(filteredListings);
 	return (
 		<>
+			{isAdmin && (
+				<div className="mx-5 my-4 flex items-center gap-3">
+					<Label htmlFor="admin-switch">
+						<i>Admin Mode</i>
+					</Label>
+					<Switch
+						id="admin-switch"
+						checked={adminMode}
+						onCheckedChange={() => setAdminMode((prev) => !prev)}
+						className="data-[state=checked]:bg-red-500"
+					/>
+				</div>
+			)}
 			<div className="flex justify-between mx-5 my-5 items-center">
 				<h1 className="text-2xl font-bold ">View All Listings</h1>
 				<ArrowUpWideNarrow />
