@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 
 const ListingsHome = () => {
 	const [listings, setListings] = useState([]);
+	const [filter, setFilter] = useState('all');
 
 	// Fetching List
 	useEffect(() => {
@@ -24,7 +25,15 @@ const ListingsHome = () => {
 		fetchListings();
 	}, []);
 
-	console.log(listings);
+	const filteredListings = listings.filter((listing) => {
+		if (filter === 'all') return true;
+		if (filter === 'fixed') return listing.pricingType === 'FIXED';
+		if (filter === 'bidding') return listing.pricingType === 'BID';
+		if (filter === 'service') return listing.pricingType === 'HOURLY';
+		return true;
+	});
+
+	console.log(filteredListings);
 	return (
 		<>
 			<div className="flex justify-between mx-5 my-5 items-center">
@@ -33,20 +42,31 @@ const ListingsHome = () => {
 			</div>
 
 			<div className="mx-5 my-2 space-x-2">
-				<Button className="bg-foregroundCustom">Filter</Button>
-				<Button className="bg-white text-black hover:bg-foregroundCustom hover:text-white">
+				<Button className="bg-foregroundCustom" onClick={() => setFilter('all')}>
+					Filter
+				</Button>
+				<Button
+					className="bg-white text-black hover:bg-foregroundCustom hover:text-white"
+					onClick={() => setFilter('fixed')}
+				>
 					Fixed Sales
 				</Button>
-				<Button className="bg-white text-black hover:bg-foregroundCustom hover:text-white">
+				<Button
+					className="bg-white text-black hover:bg-foregroundCustom hover:text-white"
+					onClick={() => setFilter('bidding')}
+				>
 					Biddings
 				</Button>
-				<Button className="bg-white text-black hover:bg-foregroundCustom hover:text-white">
+				<Button
+					className="bg-white text-black hover:bg-foregroundCustom hover:text-white"
+					onClick={() => setFilter('service')}
+				>
 					Services
 				</Button>
 			</div>
 
 			<div className="flex flex-wrap justify-center">
-				{listings.map((listing) => (
+				{filteredListings.map((listing) => (
 					<ProductCard
 						key={listing.id}
 						imageUrl={listing.imageUrls[0] || '/fallback-image.jpg'}
