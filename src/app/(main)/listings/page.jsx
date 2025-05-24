@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 const ListingsHome = () => {
 	const [listings, setListings] = useState([]);
 
+	// Fetching List
 	useEffect(() => {
 		const fetchListings = async () => {
 			try {
