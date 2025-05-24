@@ -30,8 +30,11 @@ export default function Header() {
 		>
 			<div className="container mx-auto px-4 flex items-center justify-between">
 				<div className="flex items-center">
-					<Link href="/" className="text-white font-bold text-2xl flex items-center">
-						<span>Bikri Hoi</span>
+					<Link href="/" className="font-bold text-3xl text-backgroundCustom">
+						Bikri
+						<i className="text-3xl text-backgroundCustom bg-foregroundCustom border rounded-xl">
+							হয়
+						</i>
 					</Link>
 				</div>
 

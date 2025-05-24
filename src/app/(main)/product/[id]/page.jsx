@@ -47,6 +47,7 @@ export default function ProductPage() {
 	const [product, setProduct] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const [sellerAvatar, setSellerAvatar] = useState(null);
 
 	useEffect(() => {
 		if (!id) return;
@@ -71,6 +72,24 @@ export default function ProductPage() {
 
 		fetchProduct();
 	}, [id]);
+
+	useEffect(() => {
+		if (!product?.seller?.clerkUserId) return;
+
+		async function fetchSellerAvatar() {
+			try {
+				const res = await fetch(`/api/user/image?userId=${product.seller.clerkUserId}`);
+				if (!res.ok) throw new Error('Failed to fetch seller avatar');
+
+				const data = await res.json();
+				setSellerAvatar(data.avatar);
+			} catch (err) {
+				console.error(err);
+			}
+		}
+
+		fetchSellerAvatar();
+	}, [product?.seller?.clerkUserId]);
 
 	if (loading) return <div>Loading product...</div>;
 	if (error) return <div>Error loading product: {error}</div>;
@@ -118,7 +137,7 @@ export default function ProductPage() {
 					<span className="text-yellow-500">
 						{'★'.repeat(Math.round(product.rating))}
 					</span>
-					<span className="text-gray-600 text-sm">{product.reviewCount} reviews</span>
+					{/* <span className="text-gray-600 text-sm">{product.reviewCount} reviews</span> */}
 				</div>
 				<div className="text-3xl font-bold mb-4">
 					<span className="font-extrabold mr-2 text-3xl">৳</span>
@@ -128,11 +147,11 @@ export default function ProductPage() {
 				{/* Seller Info */}
 				<div className="flex items-center gap-2 mb-4">
 					<img
-						src={product.seller.imageUrl}
+						src={sellerAvatar}
 						alt={product.seller.username}
 						className="w-8 h-8 rounded-full"
 					/>
-					<span className="text-sm text-gray-600">Sold by {product.seller.username}</span>
+					<span className="text-sm text-gray-600">Sold by {product.seller.name}</span>
 				</div>
 
 				{/* Condition and Type */}
@@ -152,7 +171,9 @@ export default function ProductPage() {
 
 				{/* University */}
 				<div className="mb-4">
-					<span className="text-sm text-gray-600">University: {product.university}</span>
+					<span className="text-sm text-gray-600">
+						University: <p className="font-medium">{product.university}</p>
+					</span>
 				</div>
 
 				{/* Meetup Location */}

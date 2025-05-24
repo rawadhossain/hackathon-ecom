@@ -227,7 +227,8 @@ export default function CreateListingForm({ onSubmit }) {
 				</div>
 				<div className="h-[300px] w-full rounded-lg overflow-hidden">
 					<InteractiveMap
-						initialPosition={[23.875854, 90.379547]} // Default to Dhaka
+						latitude={selectedLocation?.lat || 23.875854}
+						longitude={selectedLocation?.lng || 90.379547}
 						onLocationSelect={handleLocationSelect}
 						height="300px"
 					/>

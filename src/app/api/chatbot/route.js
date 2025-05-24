@@ -1,4 +1,5 @@
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
+import { google } from '@ai-sdk/google';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 

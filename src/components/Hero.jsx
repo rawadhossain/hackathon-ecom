@@ -25,12 +25,16 @@ export default function Hero() {
 						animate={loaded ? { opacity: 1, y: 0 } : {}}
 						transition={{ duration: 0.8 }}
 					>
-						<h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4">
+						<Link
+							href="/"
+							className="text-5xl md:text-6xl  lg:text-7xl font-bold text-white mb-4"
+						>
 							Bikri
-							<br />
-							Hoi.
-						</h1>
-						<p className="text-[#D2E9C6] text-lg mb-8 max-w-lg">
+							<i className="text-6xl text-backgroundCustom bg-foregroundCustom border rounded-xl">
+								হয়
+							</i>
+						</Link>
+						<p className="text-[#D2E9C6] text-lg mb-8 mt-4 max-w-lg">
 							A trusted AI-powered marketplace built exclusively for students to buy,
 							sell, and connect safely within campus.
 						</p>
