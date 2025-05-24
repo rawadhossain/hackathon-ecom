@@ -20,7 +20,7 @@ import { toast } from 'sonner';
 const formSchema = z.object({
 	title: z.string().min(1),
 	description: z.string().min(1),
-	type: z.enum(['OBJECT', 'SERVICE']),
+	type: z.enum(['TANGIBLE', 'SERVICE']),
 	condition: z.enum(['NEW', 'LIKE_NEW', 'GOOD', 'FAIR']).optional(),
 	price: z.coerce.number().gt(0),
 	pricingType: z.enum(['FIXED', 'BID', 'HOURLY']),
@@ -31,7 +31,7 @@ const formSchema = z.object({
 });
 
 export default function CreateListingForm({ onSubmit }) {
-	const [images, setImages] = useState(['']);
+	const [images, setImages] = useState([]);
 	const {
 		register,
 		handleSubmit,
@@ -54,6 +54,7 @@ export default function CreateListingForm({ onSubmit }) {
 		formData.append('file', file);
 		formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
 
+		console.log('Uploading image...');
 		try {
 			const res = await fetch(
 				`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
@@ -66,6 +67,8 @@ export default function CreateListingForm({ onSubmit }) {
 			const data = await res.json();
 			if (data.secure_url) {
 				const newImages = [...images, data.secure_url];
+				console.log(newImages);
+				console.log('Image Uploaded');
 				setImages(newImages);
 				setValue('imageUrls', newImages);
 				toast.success('Image uploaded successfully!');
@@ -73,6 +76,7 @@ export default function CreateListingForm({ onSubmit }) {
 				throw new Error('Upload failed');
 			}
 		} catch (err) {
+			console.log('Image upload failed');
 			toast.error('Image upload failed');
 		}
 	};
@@ -93,7 +97,7 @@ export default function CreateListingForm({ onSubmit }) {
 					<SelectValue placeholder="Select type" />
 				</SelectTrigger>
 				<SelectContent>
-					<SelectItem value="OBJECT">Object</SelectItem>
+					<SelectItem value="TANGIBLE">Object</SelectItem>
 					<SelectItem value="SERVICE">Service</SelectItem>
 				</SelectContent>
 			</Select>
