@@ -4,13 +4,33 @@ import React, { useEffect, useState } from 'react';
 import ProductCard from '@/components/ProductCard';
 import { ArrowUpWideNarrow } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@radix-ui/react-label';
 
 const ListingsHome = () => {
 	const [listings, setListings] = useState([]);
 	const [filter, setFilter] = useState('all');
+	const [onlyMyUniversity, setOnlyMyUniversity] = useState(false);
+	const [currentUserUniversity, setCurrentUserUniversity] = useState(false);
+
+	const getCurrentUserUniversity = () => {
+		fetch('/api/user')
+			.then((res) => {
+				if (!res.ok) throw new Error('Failed to fetch user');
+				return res.json();
+			})
+			.then((data) => {
+				setCurrentUserUniversity(data.university);
+				console.log("Current user's university:", data.university);
+			})
+			.catch((error) => {
+				console.error('Error fetching user:', error);
+			});
+	};
 
 	// Fetching List
 	useEffect(() => {
+		getCurrentUserUniversity();
 		const fetchListings = async () => {
 			try {
 				const res = await fetch('/api/listings');
@@ -25,12 +45,17 @@ const ListingsHome = () => {
 		fetchListings();
 	}, []);
 
-	const filteredListings = listings.filter((listing) => {
+	const filteredByType = listings.filter((listing) => {
 		if (filter === 'all') return true;
 		if (filter === 'fixed') return listing.pricingType === 'FIXED';
 		if (filter === 'bidding') return listing.pricingType === 'BID';
 		if (filter === 'service') return listing.pricingType === 'HOURLY';
 		return true;
+	});
+
+	const filteredListings = filteredByType.filter((listing) => {
+		if (!onlyMyUniversity) return true;
+		return listing.university === currentUserUniversity;
 	});
 
 	console.log(filteredListings);
@@ -64,6 +89,26 @@ const ListingsHome = () => {
 					Services
 				</Button>
 			</div>
+
+			{!currentUserUniversity && (
+				<div className="mx-5 my-4 flex items-center gap-3">
+					<h1 className="text-red-600">Complete Your Profile!</h1>
+				</div>
+			)}
+
+			{currentUserUniversity && (
+				<div className="mx-5 my-4 flex items-center gap-3">
+					<Label htmlFor="uni-switch">
+						Only show from <i>{currentUserUniversity}</i>
+					</Label>
+					<Switch
+						id="uni-switch"
+						checked={onlyMyUniversity}
+						onCheckedChange={() => setOnlyMyUniversity((prev) => !prev)}
+						className="data-[state=checked]:bg-foregroundCustom"
+					/>
+				</div>
+			)}
 
 			<div className="flex flex-wrap justify-center">
 				{filteredListings.map((listing) => (
