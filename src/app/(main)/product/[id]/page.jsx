@@ -3,6 +3,44 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { notFound, useParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import InteractiveMap from '@/components/Map/InteractiveMap';
+
+function NumberWithCommas({ value }) {
+	const formattedValue = value.toLocaleString();
+
+	return <span>{formattedValue}</span>;
+}
+
+const formatDateAgo = (date) => {
+	const now = new Date();
+	const seconds = Math.floor((now - date) / 1000);
+
+	if (seconds < 60) {
+		return `${seconds} second${seconds !== 1 ? 's' : ''} ago`;
+	}
+
+	const minutes = Math.floor(seconds / 60);
+	if (minutes < 60) {
+		return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+	}
+
+	const hours = Math.floor(minutes / 60);
+	if (hours < 24) {
+		return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+	}
+
+	const days = Math.floor(hours / 24);
+	if (days < 7) {
+		return `${days} day${days !== 1 ? 's' : ''} ago`;
+	}
+
+	// Return formatted full date if more than 7 days
+	return date.toLocaleDateString('en-US', {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+	}); // e.g. "4 July, 2025"
+};
 
 export default function ProductPage() {
 	const { id } = useParams();
@@ -38,6 +76,17 @@ export default function ProductPage() {
 	if (error) return <div>Error loading product: {error}</div>;
 	if (!product) return <div>Product not found</div>;
 
+	console.log(product);
+
+	let latitude = null;
+	let longitude = null;
+
+	if (product.meetupLocation && product.meetupLocation.includes(',')) {
+		const [latStr, lngStr] = product.meetupLocation.split(',');
+		latitude = parseFloat(latStr);
+		longitude = parseFloat(lngStr);
+	}
+	console.log(product.meetupLocation);
 	return (
 		<div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-10">
 			{/* Images */}
@@ -71,7 +120,10 @@ export default function ProductPage() {
 					</span>
 					<span className="text-gray-600 text-sm">{product.reviewCount} reviews</span>
 				</div>
-				<div className="text-3xl font-bold mb-4">${product.price.toFixed(2)}</div>
+				<div className="text-3xl font-bold mb-4">
+					<span className="font-extrabold mr-2 text-3xl">৳</span>
+					<NumberWithCommas value={product.price} />
+				</div>
 
 				{/* Seller Info */}
 				<div className="flex items-center gap-2 mb-4">
@@ -107,7 +159,13 @@ export default function ProductPage() {
 				{product.meetupLocation && (
 					<div className="mb-4">
 						<span className="text-sm text-gray-600">
-							Meetup Location: {product.meetupLocation}
+							{/* Meetup Location: {product.meetupLocation} */}
+
+							{latitude && longitude && (
+								<div className="mt-2">
+									<InteractiveMap latitude={latitude} longitude={longitude} />
+								</div>
+							)}
 						</span>
 					</div>
 				)}
