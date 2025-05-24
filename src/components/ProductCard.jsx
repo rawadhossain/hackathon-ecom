@@ -54,6 +54,7 @@ const ProductCard = ({
 	location,
 	id,
 	isAdmin,
+	onDeleted,
 }) => {
 	const [reply, setReply] = useState('');
 	const [priceGreen, setPriceGreen] = useState(false);
@@ -103,6 +104,7 @@ const ProductCard = ({
 
 			if (res.ok) {
 				alert('Product deleted successfully!');
+				if (onDeleted) onDeleted();
 				// Optionally: refresh page or remove item from UI
 			} else {
 				const err = await res.json();
