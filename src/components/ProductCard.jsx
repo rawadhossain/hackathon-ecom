@@ -1,4 +1,5 @@
 import { GraduationCap, MapPin } from 'lucide-react';
+import Link from 'next/link';
 import React from 'react';
 
 function NumberWithCommas({ value }) {
@@ -51,9 +52,13 @@ const ProductCard = ({
 	date,
 	institute,
 	location,
+	id,
 }) => {
 	return (
-		<div className="w-[220px] hover:scale-105 transition-all duration-300 p-2 border rounded-xl hover:shadow-md relative mx-5 my-2 bg-white">
+		<Link
+			href={`/product/${id}`}
+			className="w-[220px] hover:scale-105 transition-all duration-300 p-2 border rounded-xl hover:shadow-md relative mx-5 my-2 bg-white"
+		>
 			<img src={imageUrl} alt={title} className="h-40 rounded-xl w-full object-cover" />
 
 			{/* <Heart className="absolute top-2 right-2 w-5 h-5 text-gray-400 cursor-pointer" /> */}
@@ -91,7 +96,7 @@ const ProductCard = ({
 				{/* Time Details  */}
 				<p className="font-light text-sm">{formatDateAgo(new Date(date))}</p>
 			</div>
-		</div>
+		</Link>
 	);
 };
 

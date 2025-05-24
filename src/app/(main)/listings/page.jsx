@@ -114,6 +114,7 @@ const ListingsHome = () => {
 				{filteredListings.map((listing) => (
 					<ProductCard
 						key={listing.id}
+						id={listing.id}
 						imageUrl={listing.imageUrls[0] || '/fallback-image.jpg'}
 						rating={4.5} // Placeholder
 						reviews={50} // Placeholder
