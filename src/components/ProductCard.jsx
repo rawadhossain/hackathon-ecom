@@ -7,6 +7,37 @@ function NumberWithCommas({ value }) {
 	return <span>{formattedValue}</span>;
 }
 
+const formatDateAgo = (date) => {
+	const now = new Date();
+	const seconds = Math.floor((now - date) / 1000);
+
+	if (seconds < 60) {
+		return `${seconds} second${seconds !== 1 ? 's' : ''} ago`;
+	}
+
+	const minutes = Math.floor(seconds / 60);
+	if (minutes < 60) {
+		return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+	}
+
+	const hours = Math.floor(minutes / 60);
+	if (hours < 24) {
+		return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+	}
+
+	const days = Math.floor(hours / 24);
+	if (days < 7) {
+		return `${days} day${days !== 1 ? 's' : ''} ago`;
+	}
+
+	// Return formatted full date if more than 7 days
+	return date.toLocaleDateString('en-US', {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+	}); // e.g. "4 July, 2025"
+};
+
 //TODO Add star images
 //TODO change date to time ago
 const ProductCard = ({
@@ -22,7 +53,7 @@ const ProductCard = ({
 	location,
 }) => {
 	return (
-		<div className="w-[220px] p-2 border rounded-xl hover:shadow-md relative mx-5 my-2 bg-white">
+		<div className="w-[220px] hover:scale-105 transition-all duration-300 p-2 border rounded-xl hover:shadow-md relative mx-5 my-2 bg-white">
 			<img src={imageUrl} alt={title} className="h-40 rounded-xl w-full object-cover" />
 
 			{/* <Heart className="absolute top-2 right-2 w-5 h-5 text-gray-400 cursor-pointer" /> */}
@@ -58,7 +89,7 @@ const ProductCard = ({
 				</div>
 
 				{/* Time Details  */}
-				<p className="font-light text-sm">{date}</p>
+				<p className="font-light text-sm">{formatDateAgo(new Date(date))}</p>
 			</div>
 		</div>
 	);

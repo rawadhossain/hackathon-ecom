@@ -1,7 +1,7 @@
 import ProductDetail from '@/components/Product/ProductDetail';
 import { useRouter } from 'next/router';
 
-// This is a mock function to simulate fetching product data
+This is a mock function to simulate fetching product data
 const fetchProductData = async (id) => {
 	// Replace this mock data with actual API or database call
 	const product = {
