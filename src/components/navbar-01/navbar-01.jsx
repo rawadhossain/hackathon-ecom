@@ -20,7 +20,7 @@ const Navbar01Page = async () => {
 					<NavMenu className="hidden md:block" />
 
 					<div className="flex items-center gap-3">
-						<Link href="/note/write">
+						<Link href="/listings/new">
 							<Button variant="green" className="flex items-center gap-2">
 								<PenBox size={18} />
 								<span className="hidden md:inline">Add</span>
