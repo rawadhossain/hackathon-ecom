@@ -40,5 +40,4 @@ const AddNewList = () => {
 		</div>
 	);
 };
-
 export default AddNewList;
