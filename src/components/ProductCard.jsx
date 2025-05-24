@@ -1,4 +1,4 @@
-import { GraduationCap, MapPin, Sparkles } from 'lucide-react';
+import { GraduationCap, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
@@ -134,6 +134,7 @@ const ProductCard = ({
 				</div>
 
 				{/* Time Details  */}
+				<p className="font-light text-sm">{formatDateAgo(new Date(date))}</p>
 				<div className="flex items-center justify-between space-x-1">
 					<p className="font-light text-sm">{formatDateAgo(new Date(date))}</p>
 					<Sparkles
