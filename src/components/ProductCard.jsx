@@ -1,4 +1,4 @@
-import { GraduationCap, MapPin, Sparkles } from 'lucide-react';
+import { GraduationCap, MapPin, Sparkles, Trash } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
@@ -53,10 +53,12 @@ const ProductCard = ({
 	institute,
 	location,
 	id,
+	isAdmin,
 }) => {
 	const [reply, setReply] = useState('');
 	const [priceGreen, setPriceGreen] = useState(false);
-	let message = `What is the best price for ${title} in BDT? Please provide the exact price only and nothing else.`;
+
+	let message = `What is the best price for ${title} in BDT? Please provide the exact price only and nothing else. If you cannot give the exact price, just guess it, but it must be a number, not a word or a range.`;
 	const PriceAdvHandler = async () => {
 		if (!message.trim()) return;
 		// setLoading(true);
@@ -85,8 +87,45 @@ const ProductCard = ({
 		// setLoading(false);
 	};
 
+	const handleDelete = async () => {
+		if (!confirm('Are you sure you want to delete this listing?')) return;
+
+		try {
+			console.log('Deleting ID:', id);
+			const res = await fetch(`/api/product?id=${id}`, {
+				method: 'DELETE',
+			});
+
+			const text = await res.text();
+			console.log('Response text:', text);
+
+			// const data = await res.json(); // ← This line fails if `res` is HTML, not JSON
+
+			if (res.ok) {
+				alert('Product deleted successfully!');
+				// Optionally: refresh page or remove item from UI
+			} else {
+				const err = await res.json();
+				// alert('Failed to delete: ' + err.message);
+			}
+		} catch (err) {
+			alert('Error: ' + err.message);
+		}
+	};
+
 	return (
 		<div className="w-[240px] pb-5 cursor-pointer hover:scale-105 transition-all duration-300 p-2 border rounded-xl hover:shadow-md relative mx-5 my-2 bg-white">
+			{isAdmin && (
+				<div
+					className="hover:scale-125 hover:opacity-100 opacity-30 
+				transition-all duration-300 absolute top-2 right-2 w-10 h-10 
+				flex items-center justify-center text-white bg-red-500 border 
+				rounded-full cursor-pointer"
+					onClick={handleDelete}
+				>
+					<Trash className="" />
+				</div>
+			)}
 			<Link href={`/product/${id}`}>
 				<img src={imageUrl} alt={title} className="h-40 rounded-xl w-full object-cover" />
 			</Link>

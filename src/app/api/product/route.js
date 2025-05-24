@@ -30,3 +30,20 @@ export async function GET(request) {
 		return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
 	}
 }
+
+export async function DELETE(request) {
+	const { searchParams } = new URL(request.url);
+	const id = searchParams.get('id');
+
+	try {
+		const productId = id;
+		await prisma.listing.delete({
+			where: { id: productId },
+		});
+
+		return new Response(JSON.stringify({ message: 'Deleted' }), { status: 200 });
+	} catch (err) {
+		console.error(err);
+		return new Response(JSON.stringify({ error: 'Failed to delete' }), { status: 500 });
+	}
+}

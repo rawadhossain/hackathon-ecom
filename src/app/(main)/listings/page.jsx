@@ -135,6 +135,7 @@ const ListingsHome = () => {
 						rating={4.5} // Placeholder
 						reviews={50} // Placeholder
 						seller={listing.seller?.name || 'Unknown Seller'}
+						isAdmin={adminMode}
 						title={listing.title}
 						price={listing.price}
 						originalPrice={listing.price * 1.1}
