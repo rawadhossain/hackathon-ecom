@@ -30,6 +30,7 @@ const formSchema = z.object({
 	isVisibleToAll: z.boolean(),
 	university: z.string().min(1),
 	meetupLocation: z.string().optional(),
+	category: z.string().min(1),
 });
 
 export default function CreateListingForm({ onSubmit }) {
@@ -161,6 +162,19 @@ export default function CreateListingForm({ onSubmit }) {
 					<SelectItem value="FIXED">Fixed</SelectItem>
 					<SelectItem value="BID">Bidding</SelectItem>
 					<SelectItem value="HOURLY">Hourly</SelectItem>
+				</SelectContent>
+			</Select>
+
+			<Select onValueChange={(val) => setValue('category', val)}>
+				<SelectTrigger>
+					<SelectValue placeholder="Select category" />
+				</SelectTrigger>
+				<SelectContent>
+					<SelectItem value="ELECTRONICS">Electronics</SelectItem>
+					<SelectItem value="BOOKS">Books</SelectItem>
+					<SelectItem value="CLOTHING">Clothing</SelectItem>
+					<SelectItem value="FURNITURE">Furniture</SelectItem>
+					<SelectItem value="OTHER">Other</SelectItem>
 				</SelectContent>
 			</Select>
 

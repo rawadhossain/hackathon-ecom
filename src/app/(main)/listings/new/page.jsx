@@ -7,10 +7,15 @@ import { useRouter } from 'next/navigation';
 
 const AddNewList = () => {
 	const router = useRouter();
+<<<<<<< HEAD
+=======
+	const handleSubmit = async (data) => {
+		console.log('Form data:', data);
+>>>>>>> 94507e10757a9435e8d03e5b1b75d6c522cf139a
 
 	const handleSubmit = async (data) => {
 		try {
-			const res = await fetch('/api/listings', {
+			const res = await fetch('../../api/listings', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
