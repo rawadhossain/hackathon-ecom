@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 function NumberWithCommas({ value }) {
 	const formattedValue = value.toLocaleString();
 
-	return <span>{formattedValue}</span>;
+	return <span className="font-bold">{formattedValue}</span>;
 }
 
 const formatDateAgo = (date) => {
@@ -111,7 +111,10 @@ const ProductCard = ({
 				</div>
 
 				{reply && (
-					<p className={`mt-3 max-h-96 overflow-y-auto whitespace-pre-wrap break-words `}>
+					<p
+						className={`mt-3 max-h-96 overflow-y-auto whitespace-pre-wrap break-words border-border shadow-sm bg-muted py-1 px-4 rounded-full transition-all duration-300`}
+					>
+						<span className="text-sm font-bold text-emerald-500">AI price: </span>
 						<span className="font-bold text-xl">৳</span>
 						<NumberWithCommas value={parseInt(reply)} />
 					</p>
