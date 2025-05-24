@@ -88,8 +88,8 @@ const ProductCard = ({
 						<p className="text-gray-500 text-xs truncate">{institute}</p>
 					</div>
 					<div className="flex space-x-2 items-center">
-						<MapPin size={15} color="#bf2900" />
-						<p className="text-gray-500 text-xs truncate">{location}</p>
+						{/* <MapPin size={15} color="#bf2900" /> */}
+						{/* <p className="text-gray-500 text-xs truncate">{location}</p> */}
 					</div>
 				</div>
 

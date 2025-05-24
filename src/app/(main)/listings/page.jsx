@@ -61,54 +61,56 @@ const ListingsHome = () => {
 	console.log(filteredListings);
 	return (
 		<>
-			<div className="flex justify-between mx-5 my-5 items-center">
-				<h1 className="text-2xl font-bold ">View All Listings</h1>
-				<ArrowUpWideNarrow />
-			</div>
-
-			<div className="mx-5 my-2 space-x-2">
-				<Button className="bg-foregroundCustom" onClick={() => setFilter('all')}>
-					Filter
-				</Button>
-				<Button
-					className="bg-white text-black hover:bg-foregroundCustom hover:text-white"
-					onClick={() => setFilter('fixed')}
-				>
-					Fixed Sales
-				</Button>
-				<Button
-					className="bg-white text-black hover:bg-foregroundCustom hover:text-white"
-					onClick={() => setFilter('bidding')}
-				>
-					Biddings
-				</Button>
-				<Button
-					className="bg-white text-black hover:bg-foregroundCustom hover:text-white"
-					onClick={() => setFilter('service')}
-				>
-					Services
-				</Button>
-			</div>
-
-			{!currentUserUniversity && (
-				<div className="mx-5 my-4 flex items-center gap-3">
-					<h1 className="text-red-600">Complete Your Profile!</h1>
+			<div className="max-w-screen-xl mx-auto">
+				<div className="flex justify-between mx-5 my-5 items-center ">
+					<h1 className="text-2xl font-bold ">View All Listings</h1>
+					<ArrowUpWideNarrow />
 				</div>
-			)}
 
-			{currentUserUniversity && (
-				<div className="mx-5 my-4 flex items-center gap-3">
-					<Label htmlFor="uni-switch">
-						Only show from <i>{currentUserUniversity}</i>
-					</Label>
-					<Switch
-						id="uni-switch"
-						checked={onlyMyUniversity}
-						onCheckedChange={() => setOnlyMyUniversity((prev) => !prev)}
-						className="data-[state=checked]:bg-foregroundCustom"
-					/>
+				<div className="mx-5 my-2 space-x-2">
+					<Button className="bg-foregroundCustom" onClick={() => setFilter('all')}>
+						Filter
+					</Button>
+					<Button
+						className="bg-white text-black hover:bg-foregroundCustom hover:text-white"
+						onClick={() => setFilter('fixed')}
+					>
+						Fixed Sales
+					</Button>
+					<Button
+						className="bg-white text-black hover:bg-foregroundCustom hover:text-white"
+						onClick={() => setFilter('bidding')}
+					>
+						Biddings
+					</Button>
+					<Button
+						className="bg-white text-black hover:bg-foregroundCustom hover:text-white"
+						onClick={() => setFilter('service')}
+					>
+						Services
+					</Button>
 				</div>
-			)}
+
+				{!currentUserUniversity && (
+					<div className="mx-5 my-4 flex items-center gap-3">
+						<h1 className="text-red-600">Complete Your Profile!</h1>
+					</div>
+				)}
+
+				{currentUserUniversity && (
+					<div className="mx-5 my-4 flex items-center gap-3">
+						<Label htmlFor="uni-switch">
+							Only show from <i>{currentUserUniversity}</i>
+						</Label>
+						<Switch
+							id="uni-switch"
+							checked={onlyMyUniversity}
+							onCheckedChange={() => setOnlyMyUniversity((prev) => !prev)}
+							className="data-[state=checked]:bg-foregroundCustom"
+						/>
+					</div>
+				)}
+			</div>
 
 			<div className="flex flex-wrap justify-center">
 				{filteredListings.map((listing) => (

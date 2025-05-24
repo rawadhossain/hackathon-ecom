@@ -1,4 +1,5 @@
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
+import { google } from '@ai-sdk/google';
 
 // Initialize GoogleGenerativeAI with the API Key from the environment
 const googleAI = new createGoogleGenerativeAI({
