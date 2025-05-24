@@ -16,6 +16,8 @@ import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import InteractiveMap from '@/components/Map/InteractiveMap';
+import { Search } from 'lucide-react';
 
 const formSchema = z.object({
 	title: z.string().min(1),
@@ -32,6 +34,9 @@ const formSchema = z.object({
 
 export default function CreateListingForm({ onSubmit }) {
 	const [images, setImages] = useState([]);
+	const [selectedLocation, setSelectedLocation] = useState(null);
+	const [searchQuery, setSearchQuery] = useState('');
+	const [isSearching, setIsSearching] = useState(false);
 	const {
 		register,
 		handleSubmit,
@@ -81,7 +86,39 @@ export default function CreateListingForm({ onSubmit }) {
 		}
 	};
 
-	// const addImageField = () => setImages([...images, '']);
+	const handleLocationSelect = (latlng) => {
+		setSelectedLocation(latlng);
+		setValue('meetupLocation', `${latlng.lat},${latlng.lng}`);
+	};
+
+	const handleSearch = async () => {
+		if (!searchQuery.trim()) return;
+
+		setIsSearching(true);
+		try {
+			const response = await fetch(
+				`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+					searchQuery
+				)}&limit=1`
+			);
+			const data = await response.json();
+
+			if (data && data.length > 0) {
+				const { lat, lon } = data[0];
+				const location = { lat: parseFloat(lat), lng: parseFloat(lon) };
+				setSelectedLocation(location);
+				setValue('meetupLocation', `${lat},${lon}`);
+				toast.success('Location found!');
+			} else {
+				toast.error('Location not found. Please try a different search term.');
+			}
+		} catch (error) {
+			console.error('Search error:', error);
+			toast.error('Failed to search location. Please try again.');
+		} finally {
+			setIsSearching(false);
+		}
+	};
 
 	return (
 		<form
@@ -155,7 +192,39 @@ export default function CreateListingForm({ onSubmit }) {
 			</div>
 
 			<Input {...register('university')} placeholder="University" />
-			<Input {...register('meetupLocation')} placeholder="Meetup location (optional)" />
+
+			<div className="space-y-2">
+				<label className="text-sm font-medium">Meetup Location</label>
+				<div className="flex gap-2">
+					<Input
+						placeholder="Search location..."
+						value={searchQuery}
+						onChange={(e) => setSearchQuery(e.target.value)}
+						onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+					/>
+					<Button
+						type="button"
+						onClick={handleSearch}
+						disabled={isSearching}
+						className="shrink-0"
+					>
+						<Search className="h-4 w-4" />
+					</Button>
+				</div>
+				<div className="h-[300px] w-full rounded-lg overflow-hidden">
+					<InteractiveMap
+						initialPosition={[23.875854, 90.379547]} // Default to Dhaka
+						onLocationSelect={handleLocationSelect}
+						height="300px"
+					/>
+				</div>
+				{selectedLocation && (
+					<p className="text-sm text-gray-500">
+						Selected location: {selectedLocation.lat.toFixed(6)},{' '}
+						{selectedLocation.lng.toFixed(6)}
+					</p>
+				)}
+			</div>
 
 			<Button type="submit">Create Listing</Button>
 

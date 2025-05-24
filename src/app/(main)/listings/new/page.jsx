@@ -3,27 +3,33 @@
 import CreateListingForm from '@/components/AddListing/addListingForm';
 import React from 'react';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const AddNewList = () => {
-	const handleSubmit = async (data) => {
-		console.log('Form data:', data);
+	const router = useRouter();
 
+	const handleSubmit = async (data) => {
 		try {
 			const res = await fetch('/api/listings', {
 				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
 				body: JSON.stringify(data),
 			});
 
-			console.log('POST request sent');
 			if (!res.ok) {
-				console.log('Failed POST request.');
-				throw new Error('Failed');
+				const errorData = await res.json();
+				throw new Error(errorData.error || 'Failed to create listing');
 			}
-			console.log('POST Successful');
+
+			const responseData = await res.json();
 			toast.success('Listing created successfully!');
+			router.push('/listings');
 		} catch (err) {
-			console.log('Submission failed');
-			toast.error('Submission failed');
+			console.error('Submission failed:', err);
+			toast.error(err.message || 'Failed to create listing. Please try again.');
+			throw err; // Re-throw to be handled by the form
 		}
 	};
 
