@@ -117,7 +117,6 @@ const ProductCard = ({
 					</p>
 				)}
 
-				{/* User Details  */}
 				<div className="flex items-center space-x-1 mt-2">
 					<p className="text-sm text-gray-500 font-semibold">{seller}</p>
 					{/* TODO Add image and verified badge */}
