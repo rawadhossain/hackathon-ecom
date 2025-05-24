@@ -20,7 +20,7 @@ import { toast } from 'sonner';
 const formSchema = z.object({
 	title: z.string().min(1),
 	description: z.string().min(1),
-	type: z.enum(['OBJECT', 'SERVICE']),
+	type: z.enum(['TANGIBLE', 'SERVICE']),
 	condition: z.enum(['NEW', 'LIKE_NEW', 'GOOD', 'FAIR']).optional(),
 	price: z.coerce.number().gt(0),
 	pricingType: z.enum(['FIXED', 'BID', 'HOURLY']),
@@ -97,7 +97,7 @@ export default function CreateListingForm({ onSubmit }) {
 					<SelectValue placeholder="Select type" />
 				</SelectTrigger>
 				<SelectContent>
-					<SelectItem value="OBJECT">Object</SelectItem>
+					<SelectItem value="TANGIBLE">Object</SelectItem>
 					<SelectItem value="SERVICE">Service</SelectItem>
 				</SelectContent>
 			</Select>
