@@ -6,8 +6,10 @@ import Link from 'next/link';
 import { PenBox } from 'lucide-react';
 import { SignInButton, SignedIn, SignedOut } from '@clerk/nextjs';
 import UserMenu from '../user-menu';
+import { checkUser } from '@/lib/checkUser';
 
-const Navbar01Page = () => {
+const Navbar01Page = async () => {
+	await checkUser();
 	return (
 		<div className=" bg-muted">
 			<nav className="h-16 bg-backgroundCustom border-b">
