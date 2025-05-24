@@ -20,6 +20,8 @@ const ListingsHome = () => {
 					price={19500}
 					originalPrice={23000}
 					date="20 min ago"
+					institute="Islamic University of Technology"
+					location="Boardbazar, Dhaka"
 				/>
 
 				<ProductCard
@@ -31,6 +33,8 @@ const ListingsHome = () => {
 					price={8500}
 					originalPrice={12000}
 					date="1 hour ago"
+					institute="Dhaka University"
+					location="Dhaka University, Dhaka"
 				/>
 
 				<ProductCard
@@ -42,6 +46,8 @@ const ListingsHome = () => {
 					price={36000}
 					originalPrice={42000}
 					date="3 hours ago"
+					institute="BRAC University"
+					location="Rampura, Dhaka"
 				/>
 
 				<ProductCard
@@ -53,6 +59,8 @@ const ListingsHome = () => {
 					price={29500}
 					originalPrice={35000}
 					date="Yesterday"
+					institute="North South University"
+					location="Bashundhara, Dhaka"
 				/>
 
 				<ProductCard
@@ -64,6 +72,8 @@ const ListingsHome = () => {
 					price={42500}
 					originalPrice={52000}
 					date="2 days ago"
+					institute="Jahangirnagar University"
+					location="Savar, Dhaka"
 				/>
 
 				<ProductCard
@@ -75,6 +85,8 @@ const ListingsHome = () => {
 					price={1800}
 					originalPrice={2500}
 					date="30 min ago"
+					institute="South East University"
+					location="Mohakhali, Dhaka"
 				/>
 			</div>
 		</>
