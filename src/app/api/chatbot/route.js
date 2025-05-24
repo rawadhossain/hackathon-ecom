@@ -30,9 +30,6 @@ export async function generateChatResponse(userMessage) {
 			},
 		});
 
-		// Ensure the response is a valid string or text-based response
-		const botReply = response.text.trim();
-
 		return botReply; // Return the chatbot's response as plain text
 	} catch (error) {
 		console.error('Error generating chatbot response:', error);
