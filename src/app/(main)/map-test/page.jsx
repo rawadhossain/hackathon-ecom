@@ -3,29 +3,30 @@
 import { useState } from 'react';
 import InteractiveMap from '@/components/Map/InteractiveMap';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MapPin, Navigation, Info } from 'lucide-react';
 
 const MapTestPage = () => {
 	const [selectedLocation, setSelectedLocation] = useState(null);
 
-	// Example campus landmarks
+	// Example campus landmarks in Dhaka
 	const campusLandmarks = [
 		{
-			lat: 51.505,
-			lng: -0.09,
-			title: 'Main Library',
-			description: 'A quiet place for exchanges',
+			lat: 23.875854,
+			lng: 90.379547,
+			title: 'University of Dhaka',
+			description: 'Main campus area with high security and surveillance',
 		},
 		{
-			lat: 51.51,
-			lng: -0.1,
+			lat: 23.877854,
+			lng: 90.381547,
+			title: 'Central Library',
+			description: 'Quiet and secure location with staff presence',
+		},
+		{
+			lat: 23.873854,
+			lng: 90.377547,
 			title: 'Student Center',
-			description: 'Busy area with security cameras',
-		},
-		{
-			lat: 51.515,
-			lng: -0.095,
-			title: 'Campus Cafe',
-			description: 'Public space with staff present',
+			description: 'Public space with high foot traffic and security cameras',
 		},
 	];
 
@@ -34,49 +35,69 @@ const MapTestPage = () => {
 	};
 
 	return (
-		<div className="container mx-auto p-4">
-			<h1 className="text-2xl font-bold mb-4">Campus Map for Safe Meetups</h1>
+		<div className="container mx-auto p-4 max-w-7xl">
+			<div className="mb-8">
+				<h1 className="text-3xl font-bold mb-2">Campus Map for Safe Meetups</h1>
+				<p className="text-muted-foreground">
+					Select a safe location for your meetup or use your current location
+				</p>
+			</div>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-				<Card>
-					<CardHeader>
-						<CardTitle>Interactive Campus Map</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<InteractiveMap
-							initialPosition={[51.505, -0.09]}
-							initialZoom={15}
-							onLocationSelect={handleLocationSelect}
-							markers={campusLandmarks}
-							height="500px"
-						/>
-					</CardContent>
-				</Card>
+			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+				<div className="lg:col-span-2">
+					<Card className="overflow-hidden">
+						<CardHeader className="bg-muted/50">
+							<CardTitle className="flex items-center gap-2">
+								<MapPin className="h-5 w-5" />
+								Interactive Campus Map
+							</CardTitle>
+						</CardHeader>
+						<CardContent className="p-0">
+							<InteractiveMap
+								initialPosition={[23.875854, 90.379547]}
+								initialZoom={16}
+								onLocationSelect={handleLocationSelect}
+								markers={campusLandmarks}
+								height="600px"
+							/>
+						</CardContent>
+					</Card>
+				</div>
 
-				<Card>
-					<CardHeader>
-						<CardTitle>Selected Location</CardTitle>
-					</CardHeader>
-					<CardContent>
-						{selectedLocation ? (
-							<div className="space-y-2">
-								<p>
-									<strong>Latitude:</strong> {selectedLocation.lat.toFixed(6)}
-								</p>
-								<p>
-									<strong>Longitude:</strong> {selectedLocation.lng.toFixed(6)}
-								</p>
-								<p className="text-sm text-muted-foreground">
-									Click on the map to select a different location
-								</p>
-							</div>
-						) : (
-							<p className="text-muted-foreground">
-								Click on the map to select a meetup location
-							</p>
-						)}
-					</CardContent>
-				</Card>
+				<div className="space-y-6">
+					<Card>
+						<CardHeader className="bg-muted/50">
+							<CardTitle className="flex items-center gap-2">
+								<Navigation className="h-5 w-5" />
+								Selected Location
+							</CardTitle>
+						</CardHeader>
+						<CardContent>
+							{selectedLocation ? (
+								<div className="space-y-3">
+									<div className="p-3 bg-muted/30 rounded-lg">
+										<p className="text-sm font-medium">Coordinates</p>
+										<p className="text-sm text-muted-foreground">
+											Lat: {selectedLocation.lat.toFixed(6)}
+											<br />
+											Lng: {selectedLocation.lng.toFixed(6)}
+										</p>
+									</div>
+									<p className="text-sm text-muted-foreground">
+										Click on the map to select a different location
+									</p>
+								</div>
+							) : (
+								<div className="text-center py-4">
+									<p className="text-muted-foreground">
+										Click on the map or use the location button to select a
+										meetup location
+									</p>
+								</div>
+							)}
+						</CardContent>
+					</Card>
+				</div>
 			</div>
 		</div>
 	);
