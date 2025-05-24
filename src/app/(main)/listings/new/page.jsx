@@ -7,9 +7,13 @@ import { useRouter } from 'next/navigation';
 
 const AddNewList = () => {
 	const router = useRouter();
+<<<<<<< HEAD
+=======
 	const handleSubmit = async (data) => {
 		console.log('Form data:', data);
+>>>>>>> 94507e10757a9435e8d03e5b1b75d6c522cf139a
 
+	const handleSubmit = async (data) => {
 		try {
 			const res = await fetch('../../api/listings', {
 				method: 'POST',
@@ -19,17 +23,18 @@ const AddNewList = () => {
 				body: JSON.stringify(data),
 			});
 
-			console.log('POST request sent');
 			if (!res.ok) {
-				console.log('Failed POST request.');
-				throw new Error('Failed');
+				const errorData = await res.json();
+				throw new Error(errorData.error || 'Failed to create listing');
 			}
-			console.log('POST Successful');
+
+			const responseData = await res.json();
 			toast.success('Listing created successfully!');
 			router.push('/listings');
 		} catch (err) {
-			console.log('Submission failed');
-			toast.error('Submission failed');
+			console.error('Submission failed:', err);
+			toast.error(err.message || 'Failed to create listing. Please try again.');
+			throw err; // Re-throw to be handled by the form
 		}
 	};
 
