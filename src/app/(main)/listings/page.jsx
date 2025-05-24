@@ -31,19 +31,19 @@ const ListingsHome = () => {
 			});
 	};
 
+	const fetchListings = async () => {
+		try {
+			const res = await fetch('/api/listings');
+			if (!res.ok) throw new Error('Failed to fetch listings');
+			const data = await res.json();
+			setListings(data);
+		} catch (error) {
+			console.error('Error loading listings:', error);
+		}
+	};
 	// Fetching List
 	useEffect(() => {
 		getCurrentUserUniversity();
-		const fetchListings = async () => {
-			try {
-				const res = await fetch('/api/listings');
-				if (!res.ok) throw new Error('Failed to fetch listings');
-				const data = await res.json();
-				setListings(data);
-			} catch (error) {
-				console.error('Error loading listings:', error);
-			}
-		};
 
 		fetchListings();
 	}, []);
@@ -142,6 +142,7 @@ const ListingsHome = () => {
 						date={new Date(listing.createdAt)}
 						institute={listing.university}
 						location={listing.meetupLocation || 'N/A'}
+						onDeleted={fetchListings}
 					/>
 				))}
 			</div>
