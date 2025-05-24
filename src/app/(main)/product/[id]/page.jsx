@@ -37,47 +37,6 @@ export default function ProductPage() {
 	if (loading) return <div>Loading product...</div>;
 	if (error) return <div>Error loading product: {error}</div>;
 	if (!product) return <div>Product not found</div>;
-	// const product = {
-	// 	id: 'cmb27n55z0001z7h8pk3f036u',
-	// 	title: 'Awesome Textbook',
-	// 	description: 'A comprehensive textbook covering everything you need to know.',
-	// 	price: 49.99,
-	// 	images: [
-	// 		'https://via.placeholder.com/600x400?text=Main+Image',
-	// 		'https://via.placeholder.com/150?text=Image+2',
-	// 		'https://via.placeholder.com/150?text=Image+3',
-	// 	],
-	// 	category: 'Books',
-	// 	condition: 'Used - Good',
-	// 	type: 'Textbook',
-	// 	pricingType: 'Fixed',
-	// 	university: 'IUT',
-	// 	status: 'ACTIVE',
-	// 	reviews: [
-	// 		{
-	// 			user: 'alice',
-	// 			date: '2024-05-20',
-	// 			rating: 5,
-	// 			comment: 'Great condition, exactly as described!',
-	// 		},
-	// 		{
-	// 			user: 'bob',
-	// 			date: '2024-05-18',
-	// 			rating: 4,
-	// 			comment: 'Good book, but some pages were slightly worn.',
-	// 		},
-	// 	],
-	// 	rating: 4.5,
-	// 	ratingBreakdown: { 5: 1, 4: 1 },
-	// 	reviewCount: 2,
-	// 	seller: {
-	// 		id: 'seller123',
-	// 		username: 'bookSeller',
-	// 		imageUrl: 'https://via.placeholder.com/40?text=BS',
-	// 	},
-	// 	meetupLocation: 'Campus Library, Room 101',
-	// 	createdAt: '2024-05-01T12:00:00.000Z',
-	// };
 
 	return (
 		<div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-10">
