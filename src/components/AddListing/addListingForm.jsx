@@ -31,7 +31,7 @@ const formSchema = z.object({
 });
 
 export default function CreateListingForm({ onSubmit }) {
-	const [images, setImages] = useState(['']);
+	const [images, setImages] = useState([]);
 	const {
 		register,
 		handleSubmit,
@@ -54,6 +54,7 @@ export default function CreateListingForm({ onSubmit }) {
 		formData.append('file', file);
 		formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
 
+		console.log('Uploading image...');
 		try {
 			const res = await fetch(
 				`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
@@ -66,6 +67,8 @@ export default function CreateListingForm({ onSubmit }) {
 			const data = await res.json();
 			if (data.secure_url) {
 				const newImages = [...images, data.secure_url];
+				console.log(newImages);
+				console.log('Image Uploaded');
 				setImages(newImages);
 				setValue('imageUrls', newImages);
 				toast.success('Image uploaded successfully!');
@@ -73,6 +76,7 @@ export default function CreateListingForm({ onSubmit }) {
 				throw new Error('Upload failed');
 			}
 		} catch (err) {
+			console.log('Image upload failed');
 			toast.error('Image upload failed');
 		}
 	};
